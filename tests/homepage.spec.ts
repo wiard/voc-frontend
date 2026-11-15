@@ -1,4 +1,9 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
+
+async function openHomepage(page: Page) {
+  await page.goto("./");
+  await expect(page.locator("#kennisbank-titel")).toBeVisible();
+}
 
 test("zelfstandig document zonder Figma-verzoeken", async ({ page }) => {
   const figmaRequests: string[] = [];
@@ -7,7 +12,7 @@ test("zelfstandig document zonder Figma-verzoeken", async ({ page }) => {
       figmaRequests.push(request.url());
     }
   });
-  await page.goto("./");
+  await openHomepage(page);
   await expect(page).toHaveTitle("VOC — Verenigd Onafhankelijk Collectief");
   await expect(page.locator("html")).toHaveAttribute("lang", "nl");
   await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
@@ -29,12 +34,11 @@ test("geen consolefouten, ontbrekende imports of kapotte afbeeldingen", async ({
   page.on("response", (response) => {
     if (response.status() >= 400) errors.push(`${response.status()}: ${response.url()}`);
   });
-  await page.goto("./");
-  await page.evaluate(async () => {
-    await document.fonts.ready;
-    await Promise.all(Array.from(document.images, (image) => image.decode()));
-  });
+  await openHomepage(page);
+  await page.evaluate(() => document.fonts.ready);
   for (const image of await page.getByRole("img").all()) {
+    await image.scrollIntoViewIfNeeded();
+    await image.evaluate((element: HTMLImageElement) => element.decode());
     await expect(image).toHaveAttribute("alt", /\S/);
     expect(
       await image.evaluate((element: HTMLImageElement) => element.naturalWidth),
@@ -45,7 +49,7 @@ test("geen consolefouten, ontbrekende imports of kapotte afbeeldingen", async ({
 });
 
 test("navigatie verwijst naar bestaande secties en mobiel menu sluit", async ({ page }) => {
-  await page.goto("./");
+  await openHomepage(page);
   const brokenAnchors = await page
     .locator('a[href^="#"]')
     .evaluateAll((links) =>
@@ -77,7 +81,7 @@ test("navigatie verwijst naar bestaande secties en mobiel menu sluit", async ({ 
 });
 
 test("effectverkenner wisselt uitsluitend herkenbare demogegevens", async ({ page }) => {
-  await page.goto("./");
+  await openHomepage(page);
   const explorer = page.locator("main > section").first();
   await expect(explorer.getByText("DEMO", { exact: true })).toBeVisible();
   await expect(explorer).not.toContainText("LIVE MODEL");
@@ -99,7 +103,7 @@ test("effectverkenner wisselt uitsluitend herkenbare demogegevens", async ({ pag
 });
 
 test("demoformulieren valideren, verzenden niets en bewaren niets", async ({ page }) => {
-  await page.goto("./");
+  await openHomepage(page);
   await page.waitForLoadState("networkidle");
   const submissions: string[] = [];
   page.on("request", (request) => {
@@ -142,11 +146,13 @@ test("demoformulieren valideren, verzenden niets en bewaren niets", async ({ pag
   ).toEqual({ local: 0, session: 0, cookie: "" });
   await page.reload();
   await expect(page.getByRole("form", { name: "Nieuwsbriefdemonstratie" })).toBeVisible();
-  await expect(page.getByRole("status")).toHaveCount(0);
+  await expect(
+    page.locator('#meedenken [role="status"], #nieuwsbrief [role="status"]'),
+  ).toHaveCount(0);
 });
 
 test("responsive opmaak en visuele controle", async ({ page }, testInfo) => {
-  await page.goto("./");
+  await openHomepage(page);
   await page.evaluate(() => document.fonts.ready);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
     page.viewportSize()!.width,
@@ -155,6 +161,18 @@ test("responsive opmaak en visuele controle", async ({ page }, testInfo) => {
   expect(headline).not.toBeNull();
   expect(headline!.x).toBeGreaterThanOrEqual(0);
   expect(headline!.x + headline!.width).toBeLessThanOrEqual(page.viewportSize()!.width);
+  const clippedHeadings = await page
+    .locator("main h1, main h2, main h3, main h4")
+    .evaluateAll((headings) =>
+      headings.flatMap((heading) => {
+        const range = document.createRange();
+        range.selectNodeContents(heading);
+        return Array.from(range.getClientRects())
+          .filter((rect) => rect.left < -1 || rect.right > innerWidth + 1)
+          .map(() => heading.textContent);
+      }),
+    );
+  expect(clippedHeadings).toEqual([]);
   await expect(page.getByRole("button", { name: "Aanmelden (demo)", exact: true })).toBeVisible();
   await testInfo.attach("homepage", {
     body: await page.screenshot({ fullPage: true }),
@@ -163,7 +181,7 @@ test("responsive opmaak en visuele controle", async ({ page }, testInfo) => {
 });
 
 test("toetsenbord, inhoudslink en toegankelijke formulierlabels", async ({ page }) => {
-  await page.goto("./");
+  await openHomepage(page);
   await page.keyboard.press("Tab");
   await expect(page.getByRole("link", { name: "Direct naar inhoud" })).toBeFocused();
   await page.keyboard.press("Enter");
@@ -187,7 +205,7 @@ test("toetsenbord, inhoudslink en toegankelijke formulierlabels", async ({ page 
 
 test("voorkeur voor minder beweging wordt gerespecteerd", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("./");
+  await openHomepage(page);
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe(
     "auto",
   );

@@ -63,6 +63,7 @@ jobs:
           PLAYWRIGHT_USE_EXISTING_BUILD: "1"
         run: |
           pnpm test:publishing
+          pnpm test:knowledge
           pnpm check:sources
           pnpm audit --audit-level=high
           pnpm typecheck

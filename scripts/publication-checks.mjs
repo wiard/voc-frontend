@@ -1,4 +1,5 @@
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { lstatSync, readdirSync, readFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -59,8 +60,24 @@ export function checkSources(root = process.cwd()) {
   return paths.length;
 }
 
-export function checkDist(root = resolve("dist"), base = process.env.VOC_BASE_PATH || "/") {
+const knowledgeManifest = JSON.parse(
+  readFileSync(new URL("../knowledge/manifest.json", import.meta.url), "utf8"),
+).files;
+
+export function checkDist(
+  root = resolve("dist"),
+  base = process.env.VOC_BASE_PATH || "/",
+  options = {},
+) {
   if (!/^\/(?:[A-Za-z0-9_-]+\/)*$/.test(base)) throw new Error("Invalid public base path");
+  const preserved = (options.knowledgeManifest ?? knowledgeManifest).map((entry) => ({
+    ...entry,
+    target: entry.path === "index.html" ? "over-voc.html" : entry.path,
+  }));
+  const approved = new Set([
+    ...preserved.map((entry) => entry.target),
+    "data/knowledge-catalog.json",
+  ]);
   const files = [];
   function visit(dir) {
     for (const entry of readdirSync(dir)) {
@@ -73,8 +90,9 @@ export function checkDist(root = resolve("dist"), base = process.env.VOC_BASE_PA
         visit(full);
         continue;
       }
-      // Explicit scope for phase 2A; extend deliberately when knowledge is approved.
+      // Existing knowledge files must be explicitly inventoried, never inferred from links.
       if (
+        !approved.has(path) &&
         !/^(?:index\.html|favicon\.png|assets\/[A-Za-z0-9_.\/-]+\.(?:js|css|png|jpg|jpeg|svg|webp|woff2?))$/.test(
           path,
         )
@@ -91,6 +109,14 @@ export function checkDist(root = resolve("dist"), base = process.env.VOC_BASE_PA
     }
   }
   visit(root);
+  for (const entry of preserved) {
+    if (!files.includes(entry.target))
+      throw new Error(`Existing public URL missing: ${entry.path}`);
+    const sha = createHash("sha256")
+      .update(readFileSync(join(root, entry.target)))
+      .digest("hex");
+    if (sha !== entry.sha256) throw new Error(`Existing public content changed: ${entry.path}`);
+  }
   const html = readFileSync(join(root, "index.html"), "utf8");
   for (const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)) {
     const url = match[1];

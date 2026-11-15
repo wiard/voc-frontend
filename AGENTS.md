@@ -28,6 +28,11 @@ This is the canonical project structure. Start with task-relevant files below. O
 - `.github/workflows/build.yml` - Build-only CI; no publication permissions
 - `.github/workflow-templates/pages-publish.yml.disabled` - Inactive publication template; never activate without explicit authorization
 - `scripts/publication-checks.mjs` and `tests/publishing.test.mjs` - Local publication and secret-pattern safeguards
+- `knowledge/original/` and `knowledge/manifest.json` - Immutable public VOC snapshot and SHA-256 provenance; never edit originals or access the restricted VPS source directory
+- `scripts/prepare-knowledge.mjs` - Generate copies, catalog and pure tax functions before dev/typecheck/build/tests; generated outputs are ignored
+- `src/knowledge/KnowledgeHub.tsx` and `TaxLab.tsx` - React knowledge UI and original tax model integration
+- `tests/knowledge.test.mjs` and `tests/knowledge.spec.ts` - Preservation, 1000 model scenarios, routes and knowledge browser checks
+- `docs/PHASE2B_REPORT.md` - Integration scope, source gaps and final results
 
 ## Dependencies
 

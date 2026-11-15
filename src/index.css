@@ -19,6 +19,14 @@
     font-family: "Inter", sans-serif;
   }
 
+  h1,
+  h2,
+  h3,
+  h4 {
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+
   a,
   button {
     -webkit-tap-highlight-color: transparent;

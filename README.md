@@ -52,39 +52,61 @@ Open dan **http://127.0.0.1:4173**. Stop een handmatig gestarte server met Ctrl+
 - Onderzoeksvraag en nieuwsbrief zijn lokale ontwerpdemonstraties. Ze sturen
   niets op, schrijven niets weg en bevestigen geen echte inzending of aanmelding.
   Alleen tijdelijke React-interface-status verandert; herladen herstelt de demo.
-- De footerlinks Privacy, Toegankelijkheid en Broncode zijn bestaande
-  placeholders. "Open data" en "Lees de uitwerking" verwijzen naar de
-  transparantiesectie, niet naar de VOC-kennisbasis.
+- De footerlinks Privacy, Toegankelijkheid en Broncode blijven placeholders.
+  "Open data" opent de kennisbank. De beginselen verwijzen naar de bestaande
+  inhoudelijke dossiers. Het officiële X-account is gekoppeld.
 - Inter wordt nog via Google Fonts geladen. De Rijksmuseumfoto komt nog van
   Unsplash, met de bestaande naamsvermelding. Internet is nodig voor die
   externe middelen; zelfstandig betekent hier **zonder Figma**, niet offline.
 - Er zijn geen API-sleutels, trackingconfiguratie, backend of nieuwe diensten
   toegevoegd.
 
-## Fase 2 — grens en voorbereiding
+## Kennisintegratie (fase 2B)
 
-De bestaande VOC-pagina's, datasets, bronbestanden, voorstellen en het
-belastinglaboratorium zijn **niet** in deze repository geïntegreerd of gewijzigd.
-Alleen lokale ontwikkeling op `codex/figma-standalone` is uitgevoerd; niet pushen
-of publiceren zonder afzonderlijke toestemming.
+Op `codex/knowledge-integration`, vanaf de afgeronde fase 2A, zijn de publieke
+VOC-bestanden lokaal geïntegreerd. Productie blijft ongewijzigd. Niet pushen of
+publiceren zonder afzonderlijke toestemming.
 
-Na toestemming: maak eerst een inventaris van alle publieke URL's en bestanden.
-Scheid vervolgens presentatiecomponenten, een getypeerde inhoudscatalogus,
-data-adapters en het bestaande pure belastingrekenmodel. Behoud bronmetadata,
-eenheden, onzekerheden en de status van voorstellen. Houd demogegevens daarbij
-expliciet gescheiden van echte kennisdata.
+- `knowledge/original/`: 25 ongewijzigde publieke VOC-bestanden.
+- `knowledge/manifest.json`: oorspronkelijke paden, groottes en SHA-256.
+- `scripts/prepare-knowledge.mjs`: controleert het manifest en maakt lokaal de
+  publiceerbare kopieën, zoekcatalogus en pure rekenmodule.
+- `src/knowledge/KnowledgeHub.tsx`: 54 datasets, dossiers, bronregister en drie
+  voorstellen met behoud van status, metadata en ontbrekende waarden.
+- `src/knowledge/TaxLab.tsx`: nieuwe interface rond de letterlijk overgenomen
+  oorspronkelijke rekenfunctie. Geen echte Nederlandse belastingberekening.
 
-De homepage is niet breed opgesplitst: dat was niet nodig om haar zelfstandig
-betrouwbaar te laten functioneren. Gerichte componentextractie volgt wanneer de
-kennislaag wordt aangesloten. De bestaande `@`-alias blijft beschikbaar.
+De zeven homepage-ingangen verbinden beginselen, werkwijze, laboratorium,
+transparantie, historische dossiers, Jouw straat en het AI-experiment. De
+oorspronkelijke volledige dossierpagina's blijven als leesversie beschikbaar op
+hun bestaande `.html`-URL's, inclusief eigen grafieken en interacties. De oude
+homepage staat volledig op `over-voc.html`; oude homepage-ankers verwijzen daar
+automatisch naartoe. Het oorspronkelijke Figma-ontwerp blijft de React-ingang.
 
-Een toekomstige release moet **alle** bestaande publieke bestanden en URL's
-behouden, inclusief niet vanuit de homepage gelinkte dossiers en de AI-poster.
-Vervang de huidige webroot niet door alleen deze `dist/`. De huidige VPS-CSP
-laat de externe lettertypen en afbeelding niet toe; los die compatibiliteit in
-een volgende, goedgekeurde fase op. Bouw buiten de VPS.
+De publieke export bevat **125 unieke bronverwijzingen** en **49 unieke
+bronbestandsverwijzingen** bij datasets. Het opgegeven archief van 98 ruwe
+bronbestanden is niet toegankelijk/gekopieerd en wordt niet als compleet
+gepresenteerd. Er zijn geen ontbrekende waarden of bronbestanden verzonnen.
 
-Zie [het fase-1-rapport](docs/PHASE1_REPORT.md) voor bevindingen en testresultaten.
+```sh
+pnpm knowledge:prepare
+pnpm test:knowledge
+pnpm check
+```
+
+Dev, typecheck, build en tests bereiden de kennisbestanden automatisch voor.
+De gegenereerde bestanden onder `public/`, `knowledge/generated/` en de
+rekenmodule zijn genegeerde buildproducten: bewerk ze niet met de hand. De
+oorspronkelijke snapshots blijven onveranderd. Voor een toekomstige data-update:
+bewaar een nieuwe gecontroleerde VOC-snapshot, werk het manifest bewust bij,
+genereer opnieuw en draai de regressie; geen presentatiecode aanpassen.
+
+`pnpm check:dist` weigert ontbrekende of gewijzigde oorspronkelijke publieke
+bestanden en niet-goedgekeurde uitvoer. De AI-poster blijft behouden. Een
+toekomstige VPS-publicatie vereist nog controle van de strikte bestaande CSP,
+omdat Google Fonts en Unsplash externe middelen blijven. Bouw buiten de VPS.
+
+Zie [fase 1](docs/PHASE1_REPORT.md) en [het fase-2B-rapport](docs/PHASE2B_REPORT.md).
 
 ## GitHub-bouwvoorbereiding (fase 2A)
 

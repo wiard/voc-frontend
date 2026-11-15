@@ -48,6 +48,7 @@ jobs:
       - name: Check workflow safeguards and source files
         run: |
           pnpm test:publishing
+          pnpm test:knowledge
           pnpm check:sources
           pnpm audit --audit-level=high
       - name: TypeScript

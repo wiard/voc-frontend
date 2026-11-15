@@ -14,6 +14,8 @@ import { join } from "node:path";
 import { parse } from "yaml";
 import { checkApproval, checkDist, sensitiveMarkers } from "../scripts/publication-checks.mjs";
 
+const checkTestDist = (root, base = "/") => checkDist(root, base, { knowledgeManifest: [] });
+
 const read = (path) => parse(readFileSync(new URL(`../${path}`, import.meta.url), "utf8"));
 const build = read(".github/workflows/build.yml");
 const pages = read(".github/workflow-templates/pages-publish.yml.disabled");
@@ -122,18 +124,18 @@ test("artifact rejects internal files, source maps, hidden files, links and cred
     writeFileSync(join(dir, "assets/app.js"), "console.log('VOC');");
     writeFileSync(join(dir, "assets/app.css"), "body {color: navy}");
     writeFileSync(join(dir, "favicon.png"), "synthetic image");
-    assert.equal(checkDist(dir).length, 4);
+    assert.equal(checkTestDist(dir).length, 4);
     for (const file of [".env", "README.md", "package.json", "assets/code.js.map"]) {
       writeFileSync(join(dir, file), "private");
-      assert.throws(() => checkDist(dir), /hidden|Unapproved/);
+      assert.throws(() => checkTestDist(dir), /hidden|Unapproved/);
       rmSync(join(dir, file));
     }
     rmSync(join(dir, "favicon.png"));
     symlinkSync("/does-not-exist", join(dir, "favicon.png"));
-    assert.throws(() => checkDist(dir), /symbolic link/);
+    assert.throws(() => checkTestDist(dir), /symbolic link/);
     rmSync(join(dir, "favicon.png"));
     writeFileSync(join(dir, "index.html"), "gh" + "p_" + "A".repeat(36));
-    assert.throws(() => checkDist(dir), /secret/);
+    assert.throws(() => checkTestDist(dir), /secret/);
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
@@ -150,11 +152,11 @@ test("artifact validates project-path asset links and rejects missing references
       join(dir, "index.html"),
       '<script src="/voc-frontend/assets/app.js"></script><link href="/voc-frontend/assets/app.css">',
     );
-    assert.equal(checkDist(dir, "/voc-frontend/").length, 4);
-    assert.throws(() => checkDist(dir, "/"), /Invalid built asset/);
-    assert.throws(() => checkDist(dir, "//other.example/"), /Invalid public base/);
+    assert.equal(checkTestDist(dir, "/voc-frontend/").length, 4);
+    assert.throws(() => checkTestDist(dir, "/"), /Invalid built asset/);
+    assert.throws(() => checkTestDist(dir, "//other.example/"), /Invalid public base/);
     rmSync(join(dir, "assets/app.js"));
-    assert.throws(() => checkDist(dir, "/voc-frontend/"), /Invalid built asset/);
+    assert.throws(() => checkTestDist(dir, "/voc-frontend/"), /Invalid built asset/);
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }

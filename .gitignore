@@ -6,3 +6,10 @@ playwright-report/
 .env.*
 *.local
 .DS_Store
+/knowledge/generated/
+/src/knowledge/tax-engine.js
+/public/*.html
+/public/assets/
+/public/css/
+/public/js/
+/public/data/

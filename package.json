@@ -4,16 +4,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "pnpm knowledge:prepare && vite",
+    "build": "pnpm knowledge:prepare && vite build",
     "preview": "vite preview",
     "format": "oxfmt",
-    "typecheck": "tsc --noEmit",
-    "test": "playwright test",
-    "check": "pnpm test:publishing && pnpm check:sources && pnpm typecheck && pnpm build && pnpm check:dist && pnpm test",
+    "typecheck": "pnpm knowledge:prepare && tsc --noEmit",
+    "test": "pnpm knowledge:prepare && playwright test",
+    "check": "pnpm test:publishing && pnpm test:knowledge && pnpm check:sources && pnpm typecheck && pnpm build && pnpm check:dist && pnpm test",
     "test:publishing": "node --test tests/publishing.test.mjs",
     "check:sources": "node scripts/publication-checks.mjs --sources",
-    "check:dist": "node scripts/publication-checks.mjs --dist"
+    "check:dist": "node scripts/publication-checks.mjs --dist",
+    "knowledge:prepare": "node scripts/prepare-knowledge.mjs",
+    "test:knowledge": "pnpm knowledge:prepare && node --test tests/knowledge.test.mjs"
   },
   "dependencies": {
     "react": "^19.0.0",
@@ -27,6 +29,7 @@
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^6.0.0",
     "oxfmt": "^0.76.0",
+    "parse5": "^8.1.1",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.0",
     "vite": "^8.1.7",

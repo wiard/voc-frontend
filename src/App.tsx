@@ -1,4 +1,10 @@
-import { type FormEvent, useState } from "react";
+import { type FormEvent, lazy, Suspense, useEffect, useState } from "react";
+import TaxLab from "./knowledge/TaxLab";
+import homeCompatibilityAnchors from "../knowledge/generated/home-anchors.json";
+
+const KnowledgeHub = lazy(() => import("./knowledge/KnowledgeHub"));
+
+const base = import.meta.env.BASE_URL;
 
 const Arrow = ({ className = "" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -41,18 +47,21 @@ const principles = [
     title: "Vrijheid van het individu",
     text: "De overheid beschermt jouw vrijheid, eigendom en persoonlijke levenssfeer. Zij bepaalt niet hoe jij hoort te leven.",
     color: "bg-[#c8ff62]",
+    href: "mensen.html#de-mens",
   },
   {
     number: "02",
     title: "Kennis boven partijbelang",
     text: "Voorstellen worden getoetst aan feiten, expertise en meetbare gevolgen — niet aan politieke winst op korte termijn.",
     color: "bg-[#64d8d4]",
+    href: "kennis.html#onderwijs-en-zelfstandige-burgers",
   },
   {
     number: "03",
     title: "Een seculiere rechtsstaat",
     text: "Iedereen is gelijk voor de wet. Geloof is vrij en persoonlijk; de staat blijft neutraal en bewaakt grondrechten.",
     color: "bg-[#ff7a59] text-white",
+    href: "bondgenoten.html#absolute-scheiding-tussen-religie-en-staat",
   },
 ];
 
@@ -71,6 +80,16 @@ const topics = [
 ];
 
 export default function App() {
+  useEffect(() => {
+    const redirectLegacyAnchor = () => {
+      if (homeCompatibilityAnchors.includes(window.location.hash.slice(1))) {
+        window.location.replace(`${base}over-voc.html${window.location.hash}`);
+      }
+    };
+    redirectLegacyAnchor();
+    window.addEventListener("hashchange", redirectLegacyAnchor);
+    return () => window.removeEventListener("hashchange", redirectLegacyAnchor);
+  }, []);
   const [menuOpen, setMenuOpen] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
   const [ideaSubmitted, setIdeaSubmitted] = useState(false);
@@ -302,6 +321,38 @@ export default function App() {
           </div>
         </section>
 
+        <section className="px-5 py-16 sm:px-8" aria-labelledby="onderdelen-titel">
+          <div className="mx-auto max-w-[1240px]">
+            <p className="eyebrow text-[#ff5f3d]">Onderzoek het zelf</p>
+            <h2 id="onderdelen-titel" className="mt-4 text-3xl font-black md:text-4xl">
+              Eén ingang naar VOC.
+            </h2>
+            <nav
+              aria-label="Zeven onderdelen van VOC"
+              className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
+            >
+              {[
+                ["Beginselen", "#beginselen"],
+                ["Werkwijze", "#werkwijze"],
+                ["Laboratorium", "#laboratorium"],
+                ["Transparantie", "#transparantie"],
+                ["Historische dossiers", "#historische-dossiers"],
+                ["Jouw straat", "#meedenken"],
+                ["AI-experiment", "#ai-experiment"],
+              ].map(([label, href]) => (
+                <a
+                  key={href}
+                  href={href}
+                  className="flex items-center justify-between gap-3 rounded-xl border-2 border-[#10264b]/20 bg-white p-5 font-extrabold transition hover:border-[#10264b]"
+                >
+                  {label}
+                  <Arrow className="h-5 w-5 shrink-0" />
+                </a>
+              ))}
+            </nav>
+          </div>
+        </section>
+
         <section className="bg-[#10264b] px-5 pb-5 sm:px-8 sm:pb-8">
           <div className="relative mx-auto min-h-[440px] max-w-[1376px] overflow-hidden rounded-[1.75rem] sm:min-h-[560px]">
             <img
@@ -363,7 +414,7 @@ export default function App() {
                     {item.text}
                   </p>
                   <a
-                    href="#transparantie"
+                    href={`${base}${item.href}`}
                     className="mt-auto flex items-center gap-2 pt-8 font-extrabold"
                   >
                     Lees de uitwerking{" "}
@@ -390,6 +441,27 @@ export default function App() {
                   maakt geen politieke keuzes. Gekozen mensen blijven verantwoordelijk,
                   aanspreekbaar en controleerbaar.
                 </p>
+                <p className="mt-5 text-sm leading-relaxed text-[#10264b]/75">
+                  De beschreven AI-werkwijze is nog geen aangesloten AI-systeem. Bekijk de bestaande{" "}
+                  <a
+                    className="font-bold underline"
+                    href={`${base}feiten.html#de-methode-staat-vooraf-vast`}
+                  >
+                    onderzoeksmethode
+                  </a>
+                  , de{" "}
+                  <a className="font-bold underline" href="#laboratorium">
+                    rekenregels
+                  </a>{" "}
+                  en de{" "}
+                  <a
+                    className="font-bold underline"
+                    href={`${base}over-voc.html#onze-politieke-grondslag`}
+                  >
+                    politieke grondslag
+                  </a>
+                  .
+                </p>
               </div>
               <div className="grid gap-px overflow-hidden rounded-[1.75rem] border border-[#10264b]/15 bg-[#10264b]/15 sm:grid-cols-2">
                 {researchSteps.map(([title, text], index) => (
@@ -408,6 +480,8 @@ export default function App() {
             </div>
           </div>
         </section>
+
+        <TaxLab />
 
         <section id="transparantie" className="bg-[#64d8d4] px-5 py-24 sm:px-8 lg:py-28">
           <div className="mx-auto max-w-[1240px]">
@@ -437,6 +511,17 @@ export default function App() {
                 ))}
               </div>
             </div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href="#kennisbank" className="button-primary">
+                Bekijk de datasets
+              </a>
+              <a href="#bronregister" className="button-secondary">
+                Controleer de bronnen
+              </a>
+              <a href={`${base}nieuws.html`} className="button-secondary">
+                Volledige documentenbibliotheek
+              </a>
+            </div>
             <div className="mt-16 grid gap-5 border-t-2 border-[#10264b] pt-6 md:grid-cols-3">
               <div>
                 <p className="text-3xl font-black">Open onderzoek</p>
@@ -451,6 +536,60 @@ export default function App() {
                 <p className="mt-2 text-[#10264b]/65">Beleid wordt geëvalueerd en bijgestuurd.</p>
               </div>
             </div>
+          </div>
+        </section>
+
+        <Suspense
+          fallback={
+            <section id="kennisbank" className="px-5 py-16" aria-busy="true">
+              De kennisbank wordt geladen…
+            </section>
+          }
+        >
+          <KnowledgeHub />
+        </Suspense>
+
+        <section
+          id="ai-experiment"
+          className="bg-[#64d8d4]/20 px-5 py-24 sm:px-8"
+          aria-labelledby="ai-experiment-titel"
+        >
+          <div className="mx-auto grid max-w-[1240px] items-start gap-9 md:grid-cols-2">
+            <div>
+              <p className="eyebrow text-[#ff5f3d]">Bestaande opzet en toekomstige mogelijkheden</p>
+              <h2
+                id="ai-experiment-titel"
+                className="mt-4 text-4xl font-black tracking-[-.04em] md:text-5xl"
+              >
+                AI-experiment
+              </h2>
+              <p className="mt-5 leading-relaxed">
+                De oorspronkelijke projectopzet, politieke grondslag en status zijn volledig
+                behouden. Deze interface voegt geen AI-gegenereerde onderzoeksuitkomsten toe en
+                gebruikt geen externe AI-API.
+              </p>
+              <p className="mt-4 leading-relaxed">
+                De kennislaag onderscheidt brongegevens, VOC-analyses, voorstellen en fictieve
+                oefeningen. Eventuele toekomstige AI-uitvoer vraagt eigen bronverwijzingen, een
+                zichtbaar model en versie, onzekerheden en menselijke beoordeling.
+              </p>
+              <a href={`${base}over-voc.html#experiment`} className="button-primary mt-6">
+                Lees het bestaande AI-praktijkexperiment
+              </a>
+            </div>
+            <figure className="mx-auto w-4/5">
+              <a href={`${base}assets/voc-ai-poster.png`}>
+                <img
+                  src={`${base}assets/voc-ai-poster.png`}
+                  alt="Bestaande VOC-poster over het bouwen van een politieke partij met AI"
+                  loading="lazy"
+                  className="h-auto w-full rounded-2xl"
+                />
+              </a>
+              <figcaption className="mt-3 text-sm text-[#10264b]/75">
+                De bestaande VOC-poster; behouden uit de oorspronkelijke website.
+              </figcaption>
+            </figure>
           </div>
         </section>
 
@@ -603,13 +742,16 @@ export default function App() {
             <div className="grid grid-cols-2 gap-x-12 gap-y-3 text-sm font-bold sm:grid-cols-4">
               <a href="#beginselen">Beginselen</a>
               <a href="#werkwijze">Werkwijze</a>
-              <a href="#transparantie">Open data</a>
+              <a href="#kennisbank">Open data</a>
               <a href="#meedenken">Contact</a>
             </div>
           </div>
           <div className="flex flex-col justify-between gap-3 pt-6 text-xs text-white/45 sm:flex-row">
             <p>© 2025 VOC — Verenigd Onafhankelijk Collectief</p>
-            <div className="flex gap-5">
+            <div className="flex flex-wrap gap-5">
+              <a href="https://x.com/VOCpartij" target="_blank" rel="noopener noreferrer">
+                @VOCpartij op X
+              </a>
               <a href="#">Privacy</a>
               <a href="#">Toegankelijkheid</a>
               <a href="#">Broncode</a>
