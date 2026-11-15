@@ -37,7 +37,7 @@ test("prepared custom-domain workflow preserves the approved source and rejects 
   assert.equal(customPages.jobs.build.env.VOC_BASE_PATH, "/");
   assert.equal(
     customPages.jobs.build.env.APPROVED_SOURCE,
-    "56a7f8c91ac6567e40690b6db8e7680876026c32",
+    "4ab8e46493b438d2db42335f266db987f28708a6",
   );
   const checkout = customPages.jobs.build.steps.find((step) =>
     step.uses?.startsWith("actions/checkout@"),

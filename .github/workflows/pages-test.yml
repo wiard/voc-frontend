@@ -25,12 +25,12 @@ jobs:
       pages: read
     env:
       VOC_BASE_PATH: /
-      APPROVED_SOURCE: 56a7f8c91ac6567e40690b6db8e7680876026c32
+      APPROVED_SOURCE: 4ab8e46493b438d2db42335f266db987f28708a6
     steps:
       - name: Checkout approved website source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: 56a7f8c91ac6567e40690b6db8e7680876026c32
+          ref: 4ab8e46493b438d2db42335f266db987f28708a6
           persist-credentials: false
       - name: Verify exact source
         run: test "$(git rev-parse HEAD)" = "$APPROVED_SOURCE"
@@ -70,6 +70,10 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium
       - name: Browser regression tests
         run: pnpm test
+        env:
+          PLAYWRIGHT_USE_EXISTING_BUILD: "1"
+      - name: Desktop and mobile responsive regression tests
+        run: pnpm exec playwright test --config playwright.responsive.config.mjs
         env:
           PLAYWRIGHT_USE_EXISTING_BUILD: "1"
       - name: Verify public artifact
