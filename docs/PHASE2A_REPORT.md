@@ -257,3 +257,8 @@ echte formulieren als afzonderlijke backend. Vervang de bestaande VPS-site pas
 nadat fase 2B inhoudsbehoud en integratie heeft bewezen.
 
 Fase 2A is lokaal geslaagd. Geen publicatie is uitgevoerd.
+
+Implementatiecommit: **`72aff99c1efdf340c530869a1d80a3c4c73292dd`**
+(`Prepare read-only GitHub CI and gated Pages publication template`). Deze
+commit bevat de geteste code en het rapport; de opvolgende documentatiecommit
+legt deze identifier vast. `main` blijft ongewijzigd op `2074e55`.
