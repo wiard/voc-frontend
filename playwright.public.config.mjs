@@ -1,5 +1,12 @@
 import { defineConfig } from "@playwright/test";
 
+const baseURL = process.env.VOC_PUBLIC_BASE_URL || "https://wiard.github.io/voc-frontend/";
+if (!["https://wiard.github.io/voc-frontend/", "https://nieuw.vocpartij.nl/"].includes(baseURL)) {
+  throw new Error(
+    "Public tests allow only the GitHub Pages test URL or https://nieuw.vocpartij.nl/",
+  );
+}
+
 export default defineConfig({
   testDir: "./tests",
   testMatch: ["homepage.spec.ts", "knowledge.spec.ts", "public-site.check.ts"],
@@ -11,7 +18,7 @@ export default defineConfig({
   outputDir: "test-results/public",
   reporter: [["list"], ["html", { open: "never", outputFolder: "playwright-report/public" }]],
   use: {
-    baseURL: "https://wiard.github.io/voc-frontend/",
+    baseURL,
     channel: "chrome",
     ignoreHTTPSErrors: false,
     trace: "retain-on-failure",

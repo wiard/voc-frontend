@@ -2,6 +2,7 @@ name: VOC Pages test publication
 
 # Only a deliberate change to this workflow publishes the pinned, approved source.
 # Documentation and application pushes do not automatically update the test site.
+# The confirmed custom domain must match exactly; the target check fails closed.
 on:
   push:
     branches: [codex/voc-pages-test]
@@ -23,7 +24,7 @@ jobs:
       contents: read
       pages: read
     env:
-      VOC_BASE_PATH: /voc-frontend/
+      VOC_BASE_PATH: /
       APPROVED_SOURCE: 56a7f8c91ac6567e40690b6db8e7680876026c32
     steps:
       - name: Checkout approved website source
@@ -48,9 +49,12 @@ jobs:
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
         with:
           enablement: false
-      - name: Verify project path
-        run: test "$PAGES_BASE" = "/voc-frontend"
+      - name: Verify custom domain and root path
+        run: |
+          test "$PAGES_HOST" = "nieuw.vocpartij.nl"
+          test -z "$PAGES_BASE"
         env:
+          PAGES_HOST: ${{ steps.pages.outputs.host }}
           PAGES_BASE: ${{ steps.pages.outputs.base_path }}
       - name: Install locked dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts

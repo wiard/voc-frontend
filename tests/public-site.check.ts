@@ -1,11 +1,12 @@
 import { test, expect } from "@playwright/test";
 import catalog from "../knowledge/generated/catalog.json" with { type: "json" };
 
-test("publiek HTTPS-adres en alle 54 datasets werken", async ({ page, request }) => {
+test("publiek HTTPS-adres en alle 54 datasets werken", async ({ page, request, baseURL }) => {
   test.setTimeout(120_000);
   const response = await page.goto("./");
   expect(response?.status()).toBe(200);
-  expect(new URL(page.url()).origin).toBe("https://wiard.github.io");
+  expect(new URL(page.url()).origin).toBe(new URL(baseURL!).origin);
+  expect(new URL(page.url()).pathname).toBe(new URL(baseURL!).pathname);
   const security = await response!.securityDetails();
   expect(security?.validTo).toBeGreaterThan(Date.now() / 1000);
   await expect(page.locator("#kennisbank-titel")).toBeVisible();

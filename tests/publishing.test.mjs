@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
 import { test } from "node:test";
 import {
   mkdirSync,
@@ -19,6 +20,7 @@ const checkTestDist = (root, base = "/") => checkDist(root, base, { knowledgeMan
 const read = (path) => parse(readFileSync(new URL(`../${path}`, import.meta.url), "utf8"));
 const build = read(".github/workflows/build.yml");
 const pages = read(".github/workflow-templates/pages-publish.yml.disabled");
+const customPages = read(".github/workflows/pages-test.yml");
 const good = {
   GITHUB_EVENT_NAME: "workflow_dispatch",
   GITHUB_REPOSITORY: "wiard/voc-frontend",
@@ -28,6 +30,58 @@ const good = {
   GITHUB_SHA: "a".repeat(40),
   APPROVED_COMMIT: "a".repeat(40),
 };
+
+test("prepared custom-domain workflow preserves the approved source and rejects the old target", () => {
+  assert.deepEqual(customPages.on.push.branches, ["codex/voc-pages-test"]);
+  assert.deepEqual(customPages.on.push.paths, [".github/workflows/pages-test.yml"]);
+  assert.equal(customPages.jobs.build.env.VOC_BASE_PATH, "/");
+  assert.equal(
+    customPages.jobs.build.env.APPROVED_SOURCE,
+    "56a7f8c91ac6567e40690b6db8e7680876026c32",
+  );
+  const checkout = customPages.jobs.build.steps.find((step) =>
+    step.uses?.startsWith("actions/checkout@"),
+  );
+  assert.equal(checkout.with.ref, customPages.jobs.build.env.APPROVED_SOURCE);
+  const guard = customPages.jobs.build.steps.find(
+    (step) => step.name === "Verify custom domain and root path",
+  );
+  assert.ok(guard);
+  for (const [host, path, accepted] of [
+    ["nieuw.vocpartij.nl", "", true],
+    ["wiard.github.io", "/voc-frontend", false],
+    ["nieuw.vocpartij.nl", "/voc-frontend", false],
+    ["vocpartij.nl", "", false],
+    ["www.vocpartij.nl", "", false],
+    ["", "", false],
+  ]) {
+    const result = spawnSync("/bin/sh", ["-ec", guard.run], {
+      env: { PAGES_HOST: host, PAGES_BASE: path },
+    });
+    assert.equal(result.status === 0, accepted, `${host}${path}`);
+  }
+});
+
+test("public browser configuration accepts both test domains and refuses production", () => {
+  for (const [url, accepted] of [
+    ["https://wiard.github.io/voc-frontend/", true],
+    ["https://nieuw.vocpartij.nl/", true],
+    ["https://vocpartij.nl/", false],
+    ["https://www.vocpartij.nl/", false],
+    ["http://nieuw.vocpartij.nl/", false],
+  ]) {
+    const result = spawnSync(
+      process.execPath,
+      ["--input-type=module", "-e", "await import('./playwright.public.config.mjs')"],
+      {
+        cwd: new URL("..", import.meta.url),
+        env: { ...process.env, VOC_PUBLIC_BASE_URL: url },
+        encoding: "utf8",
+      },
+    );
+    assert.equal(result.status === 0, accepted, url);
+  }
+});
 
 test("automatic build has no publication permissions or deploy action", () => {
   assert.deepEqual(build.permissions, { contents: "read" });
