@@ -201,13 +201,13 @@ export default function App() {
 
       <main id="inhoud" tabIndex={-1}>
         <section className="relative">
-          <div className="mx-auto grid min-h-[720px] max-w-[1440px] lg:grid-cols-[1.04fr_.96fr]">
-            <div className="relative z-10 flex flex-col justify-center px-5 py-20 sm:px-10 lg:px-[max(2rem,calc((100vw-1240px)/2))] lg:py-28">
+          <div className="mx-auto grid min-h-[720px] max-w-[1440px] lg:min-h-0 lg:grid-cols-[minmax(0,1.04fr)_minmax(0,.96fr)]">
+            <div className="relative z-10 flex min-w-0 flex-col justify-center px-5 py-20 sm:px-10 lg:justify-start lg:px-10 lg:py-10 xl:px-14">
               <div className="mb-7 flex w-fit items-center gap-2 rounded-full border border-[#10264b]/20 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[.14em]">
                 <Spark className="h-4 w-4 text-[#ff5f3d]" />
                 Menselijk besluit. Kunstmatige intelligentie.
               </div>
-              <h1 className="max-w-[800px] text-[clamp(3.6rem,7.8vw,7.4rem)] font-black leading-[.84] tracking-[-.075em]">
+              <h1 className="max-w-[800px] text-[clamp(3.6rem,7.8vw,7.4rem)] font-black leading-[.84] tracking-[-.075em] lg:text-[clamp(3.5rem,5vw,4.75rem)] lg:leading-[.98] lg:tracking-[-.065em] lg:hyphens-none lg:[overflow-wrap:normal]">
                 Politiek.
                 <br />
                 <span className="relative inline-block text-[#ff5f3d]">
@@ -229,11 +229,11 @@ export default function App() {
                 <br />
                 berekend.
               </h1>
-              <p className="mt-11 max-w-2xl text-xl font-medium leading-relaxed text-[#10264b]/72 md:text-2xl">
+              <p className="mt-11 max-w-2xl text-xl font-medium leading-relaxed text-[#10264b]/72 md:text-2xl lg:mt-7 lg:text-[clamp(1.125rem,1.5vw,1.25rem)]">
                 VOC vernieuwt de politiek met kunstmatige intelligentie, kennis en radicale
                 transparantie. Niet partijbelang, maar controleerbare feiten bepalen de koers.
               </p>
-              <div className="mt-9 flex flex-wrap gap-3">
+              <div className="mt-9 flex flex-wrap gap-3 lg:mt-6">
                 <a href="#werkwijze" className="button-primary">
                   Ontdek onze methode <Arrow className="h-5 w-5" />
                 </a>
@@ -243,7 +243,7 @@ export default function App() {
               </div>
             </div>
 
-            <div className="relative flex min-h-[580px] items-center overflow-hidden bg-[#10264b] px-5 py-16 text-white sm:px-10 lg:min-h-full">
+            <div className="relative flex min-h-[580px] min-w-0 items-center overflow-hidden bg-[#10264b] px-5 py-16 text-white sm:px-10 lg:min-h-full lg:items-start lg:px-8 lg:py-10 xl:px-12">
               <div className="absolute -right-28 -top-28 h-80 w-80 rounded-full border-[58px] border-[#64d8d4]/15" />
               <div className="absolute -bottom-32 -left-32 h-80 w-80 rounded-full bg-[#c8ff62]/10" />
               <div className="relative mx-auto w-full max-w-xl">
