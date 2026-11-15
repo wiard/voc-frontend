@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { type FormEvent, useState } from "react";
 
 const Arrow = ({ className = "" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -63,6 +63,7 @@ const researchSteps = [
   ["Besluit", "Mensen wegen de uitkomst en leggen publiek verantwoording af."],
 ];
 
+// Design fixtures only: not connected to VOC datasets, sources or an AI model.
 const topics = [
   { name: "Wonen", score: 92, delta: "+18%" },
   { name: "Energie", score: 78, delta: "−12%" },
@@ -87,6 +88,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen overflow-hidden bg-[#f5f2e9] text-[#10264b]">
+      <a
+        href="#inhoud"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:bg-white focus:p-4"
+      >
+        Direct naar inhoud
+      </a>
       <header className="relative z-50 border-b border-[#10264b]/15 bg-[#f5f2e9]/95 backdrop-blur">
         <div className="mx-auto flex h-20 max-w-[1240px] items-center justify-between px-5 lg:h-24 lg:px-8">
           <a href="#" className="flex items-center gap-3" aria-label="VOC, naar begin">
@@ -133,6 +140,7 @@ export default function App() {
             className="grid h-11 w-11 place-items-center rounded-full border-2 border-[#10264b] lg:hidden"
             aria-label={menuOpen ? "Menu sluiten" : "Menu openen"}
             aria-expanded={menuOpen}
+            aria-controls="mobiele-navigatie"
           >
             <span className="relative h-4 w-5">
               <span
@@ -148,7 +156,11 @@ export default function App() {
           </button>
         </div>
         {menuOpen && (
-          <nav className="absolute inset-x-0 top-full flex flex-col gap-2 border-y border-[#10264b]/15 bg-[#f5f2e9] p-5 text-xl font-extrabold shadow-xl lg:hidden">
+          <nav
+            id="mobiele-navigatie"
+            aria-label="Mobiele hoofdnavigatie"
+            className="absolute inset-x-0 top-full flex flex-col gap-2 border-y border-[#10264b]/15 bg-[#f5f2e9] p-5 text-xl font-extrabold shadow-xl lg:hidden"
+          >
             {[
               ["Beginselen", "#beginselen"],
               ["Werkwijze", "#werkwijze"],
@@ -168,7 +180,7 @@ export default function App() {
         )}
       </header>
 
-      <main>
+      <main id="inhoud" tabIndex={-1}>
         <section className="relative">
           <div className="mx-auto grid min-h-[720px] max-w-[1440px] lg:grid-cols-[1.04fr_.96fr]">
             <div className="relative z-10 flex flex-col justify-center px-5 py-20 sm:px-10 lg:px-[max(2rem,calc((100vw-1240px)/2))] lg:py-28">
@@ -219,13 +231,13 @@ export default function App() {
                 <div className="mb-4 flex items-center justify-between">
                   <div>
                     <p className="text-xs font-extrabold uppercase tracking-[.16em] text-[#64d8d4]">
-                      Open onderzoeksmodel
+                      Demonstratie onderzoeksmodel
                     </p>
                     <p className="mt-1 text-2xl font-black">Effectverkenner</p>
                   </div>
                   <span className="flex items-center gap-2 rounded-full bg-[#c8ff62] px-3 py-1.5 text-xs font-black text-[#10264b]">
                     <span className="h-2 w-2 rounded-full bg-[#10264b]" />
-                    LIVE MODEL
+                    DEMO
                   </span>
                 </div>
 
@@ -236,6 +248,7 @@ export default function App() {
                         type="button"
                         key={topic.name}
                         onClick={() => setActiveTopic(index)}
+                        aria-pressed={activeTopic === index}
                         className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${
                           activeTopic === index
                             ? "bg-[#c8ff62] text-[#10264b]"
@@ -248,14 +261,14 @@ export default function App() {
                   </div>
                   <div className="mt-7 grid grid-cols-[1fr_auto] items-end gap-4">
                     <div>
-                      <p className="text-sm text-white/55">Maatschappelijke haalbaarheid</p>
+                      <p className="text-sm text-white/55">Maatschappelijke haalbaarheid (demo)</p>
                       <p className="mt-1 text-6xl font-black tracking-[-.06em]">
                         {topics[activeTopic].score}
                         <span className="text-2xl text-white/40">/100</span>
                       </p>
                     </div>
                     <div className="rounded-xl bg-[#64d8d4]/15 p-3 text-right">
-                      <p className="text-xs text-white/50">Begrotingseffect</p>
+                      <p className="text-xs text-white/50">Begrotingseffect (demo)</p>
                       <p className="mt-1 text-xl font-black text-[#64d8d4]">
                         {topics[activeTopic].delta}
                       </p>
@@ -271,16 +284,17 @@ export default function App() {
                     ))}
                   </div>
                   <div className="mt-5 flex items-center justify-between text-xs font-bold text-white/45">
-                    <span>42 openbare bronnen</span>
-                    <span>Model v1.8</span>
-                    <span>Vandaag bijgewerkt</span>
+                    <span>Voorbeeldgegevens</span>
+                    <span>Demomodel</span>
+                    <span>Geen live gegevens</span>
                   </div>
                 </div>
                 <p className="mt-5 flex items-start gap-3 text-sm leading-relaxed text-white/55">
                   <span className="mt-1 grid h-5 w-5 shrink-0 place-items-center rounded-full border border-white/25 text-[.65rem]">
                     i
                   </span>
-                  Illustratieve weergave. Elk werkelijk VOC-onderzoek publiceert bronnen, aannames,
+                  Ontwerpdemonstratie met fictieve scores en percentages, zonder gekoppelde bronnen
+                  of AI-berekening. Elk werkelijk VOC-onderzoek publiceert bronnen, aannames,
                   onzekerheden en rekenmodellen.
                 </p>
               </div>
@@ -463,25 +477,24 @@ export default function App() {
             </div>
             <div className="bg-[#10264b] p-8 md:p-12 lg:p-16">
               {ideaSubmitted ? (
-                <div className="flex h-full min-h-80 flex-col justify-center">
+                <div role="status" className="flex h-full min-h-80 flex-col justify-center">
                   <span className="grid h-14 w-14 place-items-center rounded-full bg-[#c8ff62] text-[#10264b]">
                     <Check className="h-7 w-7" />
                   </span>
-                  <h3 className="mt-6 text-3xl font-black">Dank voor je inbreng.</h3>
+                  <h3 className="mt-6 text-3xl font-black">Demo voltooid.</h3>
                   <p className="mt-3 max-w-md leading-relaxed text-white/65">
-                    Je idee is in deze demo ontvangen. In het werkelijke platform kun je de
-                    onderzoeksstatus en publieke reacties blijven volgen.
+                    Er is geen onderzoeksvraag ingediend. Je invoer is niet verstuurd of opgeslagen.
                   </p>
                   <button
                     type="button"
                     onClick={() => setIdeaSubmitted(false)}
                     className="mt-7 w-fit border-b border-[#c8ff62] pb-1 font-bold text-[#c8ff62]"
                   >
-                    Nog een onderwerp indienen
+                    Nog een onderwerp proberen
                   </button>
                 </div>
               ) : (
-                <form onSubmit={submitIdea}>
+                <form onSubmit={submitIdea} aria-label="Onderzoeksvraagdemonstratie">
                   <p className="text-xs font-extrabold uppercase tracking-[.15em] text-[#64d8d4]">
                     Start een onderzoeksvraag
                   </p>
@@ -507,10 +520,10 @@ export default function App() {
                     type="submit"
                     className="mt-6 inline-flex h-14 w-full items-center justify-center gap-2 rounded-full bg-[#c8ff62] px-6 font-extrabold text-[#10264b] transition hover:scale-[1.01]"
                   >
-                    Dien je vraag in <Arrow className="h-5 w-5" />
+                    Dien je vraag in (demo) <Arrow className="h-5 w-5" />
                   </button>
                   <p className="mt-4 text-xs leading-relaxed text-white/40">
-                    Dit formulier is een ontwerpdemonstratie en slaat geen gegevens op.
+                    Dit is een ontwerpdemonstratie. Er wordt niets verstuurd of opgeslagen.
                   </p>
                 </form>
               )}
@@ -528,20 +541,29 @@ export default function App() {
               <p className="mt-4 text-[#10264b]/65">
                 Ontvang nieuwe analyses, voorstellen en openbare rekenmodellen in je inbox.
               </p>
+              <p className="mt-4 text-sm text-[#10264b]/65">
+                Demo: aanmelden is nog niet mogelijk. Er wordt niets verstuurd of opgeslagen.
+              </p>
             </div>
             {subscribed ? (
-              <div className="flex items-center gap-4 rounded-2xl bg-[#64d8d4]/25 p-6">
+              <div
+                role="status"
+                className="flex items-center gap-4 rounded-2xl bg-[#64d8d4]/25 p-6"
+              >
                 <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[#10264b] text-white">
                   <Check className="h-6 w-6" />
                 </span>
                 <div>
-                  <p className="text-lg font-black">Je bent aangemeld.</p>
-                  <p className="text-sm text-[#10264b]/65">Welkom bij het collectief.</p>
+                  <p className="text-lg font-black">Demo voltooid.</p>
+                  <p className="text-sm text-[#10264b]/65">
+                    Je bent niet aangemeld. Er is niets verstuurd of opgeslagen.
+                  </p>
                 </div>
               </div>
             ) : (
               <form
                 onSubmit={submitNewsletter}
+                aria-label="Nieuwsbriefdemonstratie"
                 className="flex flex-col gap-3 sm:flex-row sm:items-end"
               >
                 <label className="flex-1 text-sm font-bold">
@@ -557,7 +579,7 @@ export default function App() {
                   type="submit"
                   className="button-primary h-14 justify-center whitespace-nowrap"
                 >
-                  Aanmelden <Arrow className="h-5 w-5" />
+                  Aanmelden (demo) <Arrow className="h-5 w-5" />
                 </button>
               </form>
             )}

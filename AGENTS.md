@@ -1,12 +1,14 @@
 # figma-make-app
 
-React + Vite + Tailwind CSS project running inside Figma Make.
+React + Vite + Tailwind CSS project, originally generated inside Figma Make.
+The application now runs independently on the operator's Mac.
 
 ## Development Server
 
-A Vite development server is **already running** on `$PORT` (default 8443). You don't need to start it manually.
+Use `pnpm dev` when a local development server is needed. It binds only to
+`127.0.0.1:5173`; no server is assumed to be running.
 
-- Preview URL: The user can access the running app through the preview panel
+- Preview URL: `http://127.0.0.1:5173`
 - Hot reload: Changes to source files are reflected immediately
 
 ## Project Structure
@@ -18,14 +20,16 @@ This is the canonical project structure. Start with task-relevant files below. O
 - `src/index.css` - Global CSS entrypoint and Tailwind CSS v4 import
 - `index.html` - Vite HTML shell containing the `#root` element and loading `src/main.tsx`
 - `package.json` - Project dependencies and the Vite build, development, preview, and formatting scripts
-- `vite.config.ts` - Vite configuration with React, Tailwind CSS v4, and Figma Make plugins plus the `@` alias for `src`
-- `.mise.toml` - Toolchain versions for Node.js and pnpm
+- `vite.config.ts` - Standalone React and Tailwind CSS v4 configuration plus the `@` alias for `src`
+- `.node-version` and `package.json` - Tested Node.js version and pinned pnpm version
+- `tests/homepage.spec.ts` - Browser regression checks using installed Google Chrome
+- `docs/PHASE1_REPORT.md` - Phase 1 scope, results and integration boundaries
 
 ## Dependencies
 
 - Runtime: React 19 and React DOM 19
 - Styling: Tailwind CSS v4 with the `@tailwindcss/vite` plugin
-- Build tooling: Vite 8, TypeScript 5.7, and `@vitejs/plugin-react`
+- Build tooling: Vite 8, TypeScript 5, and `@vitejs/plugin-react`
 - Formatting: oxfmt
 
 ## Styling
