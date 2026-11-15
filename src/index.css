@@ -1,0 +1,115 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+@import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-width: 320px;
+    background: #f7f3eb;
+    font-family: "Inter", sans-serif;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: "Inter", sans-serif;
+  }
+
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  ::selection {
+    background: #ffcb05;
+    color: #142d5a;
+  }
+}
+
+@layer components {
+  .button-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    width: fit-content;
+    border-radius: 999px;
+    background: #142d5a;
+    color: white;
+    padding: 0.95rem 1.5rem;
+    font-weight: 800;
+    transition:
+      transform 180ms ease,
+      background 180ms ease;
+  }
+
+  .button-primary:hover {
+    transform: translateY(-2px);
+    background: #1d3d73;
+  }
+
+  .button-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    width: fit-content;
+    border: 2px solid #142d5a;
+    border-radius: 999px;
+    padding: 0.82rem 1.5rem;
+    font-weight: 800;
+    transition:
+      transform 180ms ease,
+      background 180ms ease;
+  }
+
+  .button-secondary:hover {
+    transform: translateY(-2px);
+    background: white;
+  }
+
+  .eyebrow {
+    font-size: 0.76rem;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .nav-link {
+    position: relative;
+    font-size: 0.9rem;
+  }
+
+  .nav-link::after {
+    position: absolute;
+    right: 0;
+    bottom: -0.5rem;
+    left: 0;
+    height: 2px;
+    content: "";
+    background: #ef5a38;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 180ms ease;
+  }
+
+  .nav-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
