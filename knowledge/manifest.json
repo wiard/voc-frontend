@@ -1,0 +1,132 @@
+{
+  "sourceHost": "murende",
+  "sourceRoot": "/var/www/vocpartij.nl",
+  "retrievedAt": "2026-11-15T13:15:01.614800+00:00",
+  "files": [
+    {
+      "path": "assets/favicon.svg",
+      "bytes": 306,
+      "sha256": "624d03831d1a758528c10e3973d29db1190e0f4707fa4a18df9850060921ae98"
+    },
+    {
+      "path": "assets/landschap.svg",
+      "bytes": 11892,
+      "sha256": "ae3717a098d7e1490f4d6f07c2f8828b46c5b38d5e3267d555d06bf348ee65c8"
+    },
+    {
+      "path": "assets/molen.svg",
+      "bytes": 2396,
+      "sha256": "d1809896e5b8b0b5d433c802f0a906ab87402bdc8b935f85598f62d79d76eadc"
+    },
+    {
+      "path": "assets/voc-ai-poster.png",
+      "bytes": 2034785,
+      "sha256": "1e14010715fa8e4f5a48317662e51bf6ad6092410b5719a6d7be511a13fbb0c1"
+    },
+    {
+      "path": "assets/voc-schip.svg",
+      "bytes": 6533,
+      "sha256": "425c80870eb1f49166c989eb0a5f0cf6a569346ed21434c96e1b1d6d7afbde2e"
+    },
+    {
+      "path": "bestuur.html",
+      "bytes": 58658,
+      "sha256": "e20349116e3d95b9a1b96e43695eb743f1fa40688d4db3e3e7275df7a8034b6c"
+    },
+    {
+      "path": "bondgenoten.html",
+      "bytes": 21798,
+      "sha256": "ed3c837539c0931283e7eb10554f7013ea1e2c36e6efa8660d2c895245e087a1"
+    },
+    {
+      "path": "css/style.css",
+      "bytes": 25526,
+      "sha256": "d8b02ee547eeefb1e37444cd36a05289a8ffc12a655bb9d8a2d98fae3a921347"
+    },
+    {
+      "path": "data/instellingen.json",
+      "bytes": 328,
+      "sha256": "f0f7a04dd620972810cd2e7fcb5c42b0d6ccb1434554bdea7e77ade8f3519ea0"
+    },
+    {
+      "path": "data/laboratorium.json",
+      "bytes": 885,
+      "sha256": "1ae022164e1c15efe16aa43119ae65b445eb0822ac45b7dde7b49887637e4fe6"
+    },
+    {
+      "path": "data/nieuws.json",
+      "bytes": 104,
+      "sha256": "ad55a9fc6fc485e40dac78575ebf3e73c37a19cdbff972579820b02b7c93db8b"
+    },
+    {
+      "path": "data/statistieken.json",
+      "bytes": 140386,
+      "sha256": "984718b9cc9e79cfd571637dc1667baf51ed3e9047a4d3cfd6b0a3d7cf56fc8c"
+    },
+    {
+      "path": "data/teller.json",
+      "bytes": 307,
+      "sha256": "666c90bfb0289e3965085aebc9087ca875d17b4dcab25891355634b20b01da83"
+    },
+    {
+      "path": "data/voorstellen.json",
+      "bytes": 11237,
+      "sha256": "cfe911d20b48e29852bff2997215fbf5cd7e61bab91da5315324253eaa7a40b9"
+    },
+    {
+      "path": "feiten.html",
+      "bytes": 74921,
+      "sha256": "b4488bf4f38c157edca43f06c50f0e2ba4fa3f58eda1d94778684d25aa699eed"
+    },
+    {
+      "path": "financien.html",
+      "bytes": 178954,
+      "sha256": "a67b3a06f7cabb95eb9888c386da3be90cf51b3d60d7df26f73340f774d42ef0"
+    },
+    {
+      "path": "geschiedenis.html",
+      "bytes": 12210,
+      "sha256": "cd8ad04d3034215cb28e027eacdb25131f4459d309e976e4913037bc4744d9c1"
+    },
+    {
+      "path": "ideeenplein.html",
+      "bytes": 23406,
+      "sha256": "c9a728f4bae599c5e59af25a8c163554759272a22fce66a955484a1ee48a31a3"
+    },
+    {
+      "path": "index.html",
+      "bytes": 16480,
+      "sha256": "fa106a7710a65858049e23d8fa51c80ba17d246a1325016392b771ea6901f033"
+    },
+    {
+      "path": "js/app.js",
+      "bytes": 13794,
+      "sha256": "e3e407b1f766330f08bd0b84dbe7504e0530355e946c2a2055f577f8e2196191"
+    },
+    {
+      "path": "js/laboratorium.js",
+      "bytes": 8603,
+      "sha256": "21f54cb144804ffa26980643e882b6d8bb26d35b7f4507ffd38d5133de54a170"
+    },
+    {
+      "path": "kennis.html",
+      "bytes": 130894,
+      "sha256": "22f2bd3eff462c715a80fb3d1ff190c9decbb606fd83895c3ea6c436f9391a4d"
+    },
+    {
+      "path": "laboratorium.html",
+      "bytes": 27634,
+      "sha256": "f44b749d57c8d5400cf88524b995e8e0142e932bfed87a097733cb11cc2870b5"
+    },
+    {
+      "path": "mensen.html",
+      "bytes": 11771,
+      "sha256": "f3773bbc796b0b08bca21eab51e75cb4f350060ed45461b44b79566c1d95b5bf"
+    },
+    {
+      "path": "nieuws.html",
+      "bytes": 6722,
+      "sha256": "9d9aeb20b1bd6a741c028dc49f75f79e6624cecf5fcaa3139f279a761834a18d"
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+{
+  "toelichting": "Goedgekeurde kandidaten 2, 3 en 4. Geen VOC-standpunten. Argumenten zijn verwachtingen; geen eigen ramingen.",
+  "voorstellen": [
+    {
+      "id": "fiscale-regelingen",
+      "titel": "Minder en eenvoudiger fiscale regelingen",
+      "datum": "2026-11-14",
+      "status": "ter beoordeling",
+      "onderdelen": [
+        {
+          "titel": "Probleem",
+          "tekst": "Uitzonderingen veranderen de belastinggrondslag en vragen eigen voorwaarden. De Miljoenennota beschrijft budgettair belang en evaluaties van regelingen.",
+          "bron": "fiscale-regelingen.html",
+          "brontitel": "Miljoenennota 2027, bijlage 4"
+        },
+        {
+          "titel": "Doel",
+          "tekst": "Een begrijpelijker belastingstelsel met minder uitvoeringslast en een controleerbare rechtvaardiging van uitzonderingen."
+        },
+        {
+          "titel": "Aannemelijke oorzaken",
+          "tekst": "Verschillende beleidsdoelen worden via fiscale regelingen nagestreefd. De bron beschrijft doelen en evaluaties per regeling; dat bewijst geen algemene oorzaak van complexiteit."
+        },
+        {
+          "titel": "Onzekere oorzaken",
+          "tekst": "Hoeveel uitvoeringslast elke uitzondering veroorzaakt en welk deel zonder die uitzondering verdwijnt, is hier niet vastgesteld."
+        },
+        {
+          "titel": "Voorgestelde aanpak",
+          "tekst": "Beoordeel regelingen afzonderlijk op doel, effect, verdeling en uitvoerbaarheid. Stel beëindiging of vereenvoudiging alleen voor met een expliciet overgangspad."
+        },
+        {
+          "titel": "Financiële gevolgen",
+          "tekst": "Geen doorrekening van dit voorstel beschikbaar. Budgettair belang is geen optelbare besparing bij afschaffing: grondslagen, interacties en gedrag kunnen veranderen. Zonder concrete lijst van wijzigingen is geen opbrengst vast te stellen."
+        },
+        {
+          "titel": "Gevolgen voor mensen en verdeling",
+          "tekst": "Gebruikers van een regeling kunnen verliezen. Ook een eenvoudiger stelsel kan nieuwe grenzen en verliezers creëren. Breng gevolgen per groep in kaart."
+        },
+        {
+          "titel": "Alternatieven",
+          "tekst": "Regeling behouden met eenvoudiger voorwaarden; omzetten naar subsidie; informatie en uitvoering verbeteren; wachten op een sterkere evaluatie."
+        },
+        {
+          "titel": "Uitvoering en overgang",
+          "tekst": "Laat de Belastingdienst concrete wijzigingen toetsen. Overgangsrecht beschermt verwachtingen, maar kan tijdelijk twee stelsels naast elkaar laten bestaan."
+        },
+        {
+          "titel": "Evaluatie en stopcriteria",
+          "tekst": "Leg vooraf vast hoe uitvoeringslast, bereik en beleidseffect worden vergeleken. Heroverweeg als de beoogde vereenvoudiging niet aantoonbaar ontstaat."
+        },
+        {
+          "titel": "Bronnen en resterende vragen",
+          "tekst": "De gelezen bijlage geeft evaluaties, geen doorrekening van deze generieke aanpak. Welke regelingen krijgen voorrang en hoe wegen we verdeling tegen eenvoud?",
+          "bron": "fiscale-regelingen.html",
+          "brontitel": "Miljoenennota 2027, bijlage 4"
+        }
+      ],
+      "voor": [
+        "Minder uitzonderingen kunnen vergelijkbare situaties gelijker behandelen.",
+        "Eenvoudiger voorwaarden kunnen uitvoering en controle verbeteren.",
+        "Evaluatie kan regelingen zonder aantoonbaar effect ter discussie stellen."
+      ],
+      "tegen": [
+        "Een uitzondering kan een goed gericht doel dienen dat met een algemene regel verloren gaat.",
+        "Afschaffing kan mensen treffen die op een regeling vertrouwden.",
+        "Overgangsrecht en vervangende subsidies kunnen complexiteit verplaatsen in plaats van verminderen."
+      ]
+    },
+    {
+      "id": "basisvaardigheden",
+      "titel": "Meer onderwijstijd voor basisvaardigheden",
+      "datum": "2026-11-14",
+      "status": "ter beoordeling",
+      "onderdelen": [
+        {
+          "titel": "Probleem",
+          "tekst": "De overheid constateert dat niet iedereen de basisvaardigheden voldoende beheerst. Dat bewijst nog niet dat extra lestijd de beste oplossing is.",
+          "bron": "basisvaardigheden.html",
+          "brontitel": "Rijksoverheid: basisvaardigheden"
+        },
+        {
+          "titel": "Doel",
+          "tekst": "Leerlingen beter laten lezen, rekenen en deelnemen aan de samenleving, met behoud van een verantwoorde brede vorming."
+        },
+        {
+          "titel": "Aannemelijke oorzaken",
+          "tekst": "Oefening en instructie vragen beschikbare tijd. Dit is een veronderstelling achter het voorstel, geen bewijs dat tijdgebrek de problemen veroorzaakt."
+        },
+        {
+          "titel": "Onzekere oorzaken",
+          "tekst": "De rol van didactiek, personeel, thuissituatie en curriculum is hier niet afzonderlijk vastgesteld. Er is geen gelezen effectevaluatie van de voorgestelde urenruil."
+        },
+        {
+          "titel": "Voorgestelde aanpak",
+          "tekst": "Onderzoek een afgebakende verschuiving van lestijd naar taal en rekenen ten koste van andere vakken. Houd burgerschap en digitale vaardigheden zichtbaar. Benoem vooraf welke lessen minder tijd krijgen."
+        },
+        {
+          "titel": "Financiële gevolgen",
+          "tekst": "Geen openbare doorrekening van dit concrete voorstel gelezen. Bij een gelijk rooster vervallen andere lessen: ook dat heeft maatschappelijke kosten. Scholing, materiaal en evaluatie kunnen extra middelen vragen."
+        },
+        {
+          "titel": "Gevolgen voor mensen en verdeling",
+          "tekst": "Leerlingen met achterstanden kunnen meer oefentijd krijgen. Andere leerlingen kunnen minder uitdaging of een smaller aanbod krijgen. Effecten kunnen per school verschillen."
+        },
+        {
+          "titel": "Alternatieven",
+          "tekst": "Didactiek verbeteren binnen bestaande uren; gerichte ondersteuning; personeel versterken; vrijwillige extra oefening. Vergelijk opties met dezelfde uitkomstmaten."
+        },
+        {
+          "titel": "Uitvoering en overgang",
+          "tekst": "Begin met een afgebakende proef en vergelijkbare evaluatie. Betrek leraren, leerlingen en ouders en maak de wijzigingen in het rooster zichtbaar."
+        },
+        {
+          "titel": "Evaluatie en stopcriteria",
+          "tekst": "Meet vaardigheidsgroei én gevolgen voor andere vakken en welzijn. Herzie de proef bij brede schade of onvoldoende overtuigende verbetering."
+        },
+        {
+          "titel": "Bronnen en resterende vragen",
+          "tekst": "De bron onderbouwt het beleidsterrein, niet de effectiviteit van een urenruil. Een onafhankelijke effectevaluatie en concrete kostenraming blijven nodig.",
+          "bron": "basisvaardigheden.html",
+          "brontitel": "Rijksoverheid: basisvaardigheden"
+        }
+      ],
+      "voor": [
+        "Extra oefentijd kan leerlingen helpen die buiten school minder ondersteuning krijgen.",
+        "Een duidelijke prioriteit kan scholen helpen keuzes in een overvol programma te maken.",
+        "Sterke taal- en rekenvaardigheden kunnen ook leren in andere vakken ondersteunen."
+      ],
+      "tegen": [
+        "Meer tijd helpt weinig als de kwaliteit van instructie het knelpunt is.",
+        "Minder tijd voor andere vakken kan brede kennis, creativiteit en motivatie aantasten.",
+        "Een centraal voorschrift kan scholen hinderen die een andere combinatie nodig hebben."
+      ]
+    },
+    {
+      "id": "uitvoeringstoets",
+      "titel": "Een uitvoeringstoets en evaluatie bij elke nieuwe wet",
+      "datum": "2026-11-14",
+      "status": "ter beoordeling",
+      "onderdelen": [
+        {
+          "titel": "Probleem",
+          "tekst": "Een juridisch doel zegt nog niet of burgers en uitvoerders met een wet uit de voeten kunnen. Er bestaan al verplichte kwaliteitstoetsen; dit voorstel moet aantonen wat het toevoegt.",
+          "bron": "uitvoeringstoets.html",
+          "brontitel": "Beleidskompas: verplichte-toetsenwijzer"
+        },
+        {
+          "titel": "Doel",
+          "tekst": "Vóór een besluit zicht op uitvoerbaarheid, en na invoering controle op werking en ongewenste effecten."
+        },
+        {
+          "titel": "Aannemelijke oorzaken",
+          "tekst": "Beleid vraagt keuzes tussen opties met verschillende gevolgen. Het Beleidskompas ordent probleem, doel, opties en gevolgen; dit is een werkwijze, geen effectbewijs."
+        },
+        {
+          "titel": "Onzekere oorzaken",
+          "tekst": "Niet vastgesteld is welk deel van uitvoeringsproblemen voortkomt uit ontbrekende toetsen, onjuiste aannames, politieke keuzes of veranderende omstandigheden."
+        },
+        {
+          "titel": "Voorgestelde aanpak",
+          "tekst": "Maak bij elke nieuwe wet zichtbaar welke uitvoeringstoetsen zijn gedaan, welke bezwaren blijven en wie ze aanvaardt. Leg evaluatie na vijf jaar vast, met gemotiveerde afwijking als de werking eerder of later te beoordelen is."
+        },
+        {
+          "titel": "Financiële gevolgen",
+          "tekst": "Geen gelezen doorrekening van extra capaciteit of mogelijke besparing. Toetsing en evaluatie kosten tijd; vermeden herstelkosten zijn onzeker en worden niet als opbrengst ingevuld."
+        },
+        {
+          "titel": "Gevolgen voor mensen en verdeling",
+          "tekst": "Burgers en uitvoerders kunnen eerder problemen signaleren. Uitstel kan ook betekenen dat mensen langer wachten op noodzakelijke wetgeving."
+        },
+        {
+          "titel": "Alternatieven",
+          "tekst": "Bestaande toetsen beter naleven; risicogericht toetsen; een proefwet; een vervalbepaling; permanente monitoring in plaats van één evaluatiemoment."
+        },
+        {
+          "titel": "Uitvoering en overgang",
+          "tekst": "Breng bestaande plichten eerst in kaart. Benoem uitvoerders, gegevens, onafhankelijke beoordeling en de manier waarop het parlement afwijkingen kan volgen."
+        },
+        {
+          "titel": "Evaluatie en stopcriteria",
+          "tekst": "Onderzoek of toetsen leiden tot wijzigingen vóór invoering en herstel daarna. Pas het proces aan als het vooral papier oplevert zonder betere uitvoerbaarheid."
+        },
+        {
+          "titel": "Bronnen en resterende vragen",
+          "tekst": "De bron toont dat kwaliteitstoetsen al bestaan. Een complete inventaris van wettelijke evaluatieplichten en een effectevaluatie van deze uitbreiding ontbreken.",
+          "bron": "uitvoeringstoets.html",
+          "brontitel": "Beleidskompas: verplichte-toetsenwijzer"
+        }
+      ],
+      "voor": [
+        "Openbare bezwaren maken politieke verantwoordelijkheid voor uitvoeringsrisico’s duidelijker.",
+        "Een afgesproken evaluatie kan ongewenste effecten op de agenda brengen.",
+        "Uitvoerders en burgers kunnen kennis inbrengen voordat een wet vastligt."
+      ],
+      "tegen": [
+        "Extra verplichte stappen kunnen urgente wetgeving vertragen.",
+        "Een toets kan een ritueel worden terwijl de feitelijke risico’s blijven.",
+        "Een vaste termijn past niet bij elke wet en kan schaarse onderzoekscapaciteit verkeerd verdelen."
+      ]
+    }
+  ]
+}

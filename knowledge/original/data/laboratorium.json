@@ -1,0 +1,10 @@
+{
+  "versie": "1.0",
+  "datum": "2026-11-14",
+  "status": "Fictieve oefenscenario’s; geen Nederlandse tarieven en geen vastgesteld VOC-beleid.",
+  "inkomens": [24000, 48000, 90000],
+  "scenario1": {"voet": 0, "grenzen": [30000, 70000], "tarieven": [20, 35, 45]},
+  "scenario2": {"voet": 10000, "grenzen": [40000], "tarieven": [25, 40]},
+  "definitie": "Grondslag = max(0, bruto - voet). Schijfgrenzen gelden voor de grondslag na aftrek van de voet. Belasting = som van belast bedrag per schijf maal tarief/100. Netto in dit model = bruto - belasting. Rond alleen het totaal af op centen, halve cent naar boven. Netto-effect = netto scenario 2 - netto scenario 1.",
+  "uitsluitingen": ["heffingskortingen", "aftrekposten", "premies volksverzekeringen", "pensioenpremies", "Zvw", "toeslagen", "box 2 en 3", "leeftijdsverschillen", "gedragsreacties", "landelijke begrotingseffecten"]
+}

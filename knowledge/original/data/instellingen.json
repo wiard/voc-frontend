@@ -1,0 +1,15 @@
+{
+  "_toelichting": "Instellingen van de website. Zie README.md voor uitleg per veld.",
+  "feestelijke_modus": {
+    "actief": false,
+    "titel": "",
+    "tekst": "",
+    "gesprek_url": "",
+    "gesprek_tekst": "Naar het gesprek op X"
+  },
+  "vraag_van_de_week": {
+    "voorbeeld": false,
+    "tekst": "",
+    "week": ""
+  }
+}

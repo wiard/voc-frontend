@@ -1,0 +1,6 @@
+{
+  "_toelichting": "De VOC-teller. Zolang 'actief' false is, toont de website geen aantal maar de tekst dat de teller actief wordt zodra aanmelden mogelijk is. Zet 'actief' pas op true als 'aantal' een echt, controleerbaar aantal aanmeldingen is.",
+  "actief": false,
+  "aantal": 0,
+  "bijgewerkt": null
+}
