@@ -279,8 +279,14 @@ geen AI-API, vectorservice, account of automatische inhoudspublicatie toegevoegd
 Branch: **`codex/knowledge-integration`**, gemaakt vanaf de volledig afgeronde
 fase-2A-branch `codex/github-publishing` op **`f721e6e`**.
 De fase-2A-implementatie staat op **`72aff99`**.
-De snapshot staat op **`c4928bd`**; de integratie en dit rapport worden als
-afzonderlijke lokale commit opgeleverd. `git log --oneline` toont de reeks.
+De snapshot staat op **`c4928bd`**. De geteste integratie en dit rapport staan op
+**`babaf8b86d5c524bd1d4d636881e6535b120ac04`**
+(`Integrate VOC knowledge, preserve dossier URLs and verify original tax model`).
+De opvolgende documentatiecommit legt deze identifier vast.
+`git log --oneline` toont de volledige lokale reeks.
+
+De laatste read-only GitHub-controle bevestigt dat de repository privé is en
+remote `main` nog op **`2074e55259d5798979cb2ea12b3b40d187598a9f`** staat.
 
 **Conclusie:** de beschikbare publieke kennis is zonder verlies geïntegreerd en
 lokaal getest. Het niet-beschikbare ruwe archief wordt expliciet als ontbrekend
