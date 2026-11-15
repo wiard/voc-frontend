@@ -1,0 +1,93 @@
+name: VOC Pages test publication
+
+# Only a deliberate change to this workflow publishes the pinned, approved source.
+# Documentation and application pushes do not automatically update the test site.
+on:
+  push:
+    branches: [codex/voc-pages-test]
+    paths: [.github/workflows/pages-test.yml]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: voc-pages-test
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.repository == 'wiard/voc-frontend' && github.ref == 'refs/heads/codex/voc-pages-test'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: read
+    env:
+      VOC_BASE_PATH: /voc-frontend/
+      APPROVED_SOURCE: 56a7f8c91ac6567e40690b6db8e7680876026c32
+    steps:
+      - name: Checkout approved website source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: 56a7f8c91ac6567e40690b6db8e7680876026c32
+          persist-credentials: false
+      - name: Verify exact source
+        run: test "$(git rev-parse HEAD)" = "$APPROVED_SOURCE"
+      - name: Install pnpm
+        uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+        with:
+          version: 10.30.2
+          run_install: false
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - name: Read Pages configuration
+        id: pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+        with:
+          enablement: false
+      - name: Verify project path
+        run: test "$PAGES_BASE" = "/voc-frontend"
+        env:
+          PAGES_BASE: ${{ steps.pages.outputs.base_path }}
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Node tests, source safeguards and TypeScript
+        run: |
+          pnpm test:publishing
+          pnpm test:knowledge
+          pnpm check:sources
+          pnpm typecheck
+      - name: Build approved website
+        run: pnpm build
+      - name: Install matching CI browser
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Browser regression tests
+        run: pnpm test
+        env:
+          PLAYWRIGHT_USE_EXISTING_BUILD: "1"
+      - name: Verify public artifact
+        run: pnpm check:dist
+      - name: Upload only the tested static artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: dist/
+          retention-days: 1
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish approved test website
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
