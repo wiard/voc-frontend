@@ -7,14 +7,14 @@ test("zelfstandig document zonder Figma-verzoeken", async ({ page }) => {
       figmaRequests.push(request.url());
     }
   });
-  await page.goto("/");
+  await page.goto("./");
   await expect(page).toHaveTitle("VOC — Verenigd Onafhankelijk Collectief");
   await expect(page.locator("html")).toHaveAttribute("lang", "nl");
   await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Politiek.");
   expect(await page.locator("html").innerHTML()).not.toContain("<!-- figma:");
   expect(figmaRequests).toEqual([]);
-  expect((await page.request.get("/favicon.png")).status()).toBe(200);
+  expect((await page.request.get("./favicon.png")).status()).toBe(200);
 });
 
 test("geen consolefouten, ontbrekende imports of kapotte afbeeldingen", async ({ page }) => {
@@ -29,7 +29,7 @@ test("geen consolefouten, ontbrekende imports of kapotte afbeeldingen", async ({
   page.on("response", (response) => {
     if (response.status() >= 400) errors.push(`${response.status()}: ${response.url()}`);
   });
-  await page.goto("/");
+  await page.goto("./");
   await page.evaluate(async () => {
     await document.fonts.ready;
     await Promise.all(Array.from(document.images, (image) => image.decode()));
@@ -45,7 +45,7 @@ test("geen consolefouten, ontbrekende imports of kapotte afbeeldingen", async ({
 });
 
 test("navigatie verwijst naar bestaande secties en mobiel menu sluit", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("./");
   const brokenAnchors = await page
     .locator('a[href^="#"]')
     .evaluateAll((links) =>
@@ -77,7 +77,7 @@ test("navigatie verwijst naar bestaande secties en mobiel menu sluit", async ({ 
 });
 
 test("effectverkenner wisselt uitsluitend herkenbare demogegevens", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("./");
   const explorer = page.locator("main > section").first();
   await expect(explorer.getByText("DEMO", { exact: true })).toBeVisible();
   await expect(explorer).not.toContainText("LIVE MODEL");
@@ -99,7 +99,7 @@ test("effectverkenner wisselt uitsluitend herkenbare demogegevens", async ({ pag
 });
 
 test("demoformulieren valideren, verzenden niets en bewaren niets", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("./");
   await page.waitForLoadState("networkidle");
   const submissions: string[] = [];
   page.on("request", (request) => {
@@ -146,7 +146,7 @@ test("demoformulieren valideren, verzenden niets en bewaren niets", async ({ pag
 });
 
 test("responsive opmaak en visuele controle", async ({ page }, testInfo) => {
-  await page.goto("/");
+  await page.goto("./");
   await page.evaluate(() => document.fonts.ready);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
     page.viewportSize()!.width,
@@ -163,7 +163,7 @@ test("responsive opmaak en visuele controle", async ({ page }, testInfo) => {
 });
 
 test("toetsenbord, inhoudslink en toegankelijke formulierlabels", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("./");
   await page.keyboard.press("Tab");
   await expect(page.getByRole("link", { name: "Direct naar inhoud" })).toBeFocused();
   await page.keyboard.press("Enter");
@@ -187,7 +187,7 @@ test("toetsenbord, inhoudslink en toegankelijke formulierlabels", async ({ page 
 
 test("voorkeur voor minder beweging wordt gerespecteerd", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
+  await page.goto("./");
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe(
     "auto",
   );

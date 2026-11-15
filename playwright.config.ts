@@ -1,14 +1,17 @@
 import { defineConfig } from "@playwright/test";
 
+const baseURL = `http://127.0.0.1:4173${process.env.VOC_BASE_PATH || "/"}`;
+
 export default defineConfig({
   testDir: "./tests",
+  testMatch: "**/*.spec.ts",
   fullyParallel: true,
   workers: 2,
   retries: 0,
   reporter: [["list"], ["html", { open: "never" }]],
   use: {
-    baseURL: "http://127.0.0.1:4173",
-    channel: "chrome",
+    baseURL,
+    channel: process.env.CI ? undefined : "chrome",
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
   },
@@ -19,8 +22,11 @@ export default defineConfig({
     { name: "desktop", use: { viewport: { width: 1440, height: 1000 } } },
   ],
   webServer: {
-    command: "pnpm build && pnpm preview",
-    url: "http://127.0.0.1:4173",
+    command:
+      process.env.PLAYWRIGHT_USE_EXISTING_BUILD === "1"
+        ? "pnpm preview"
+        : "pnpm build && pnpm preview",
+    url: baseURL,
     reuseExistingServer: false,
     timeout: 60_000,
   },

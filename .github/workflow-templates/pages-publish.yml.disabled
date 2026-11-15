@@ -1,0 +1,93 @@
+# INACTIVE TEMPLATE. Not in .github/workflows and not executable by GitHub.
+# Activation requires separate operator authorization; see docs/PHASE2A_REPORT.md.
+name: VOC manually approved Pages publication
+
+on:
+  workflow_dispatch:
+    inputs:
+      approved_commit:
+        description: Exact approved main commit (40-character SHA)
+        required: true
+        type: string
+      confirmation:
+        description: "Type PUBLISH VOC PUBLICLY to publish this commit"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: voc-pages-production
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.repository == 'wiard/voc-frontend' && github.ref == 'refs/heads/main' && vars.VOC_PAGES_ENABLED == 'true' && inputs.confirmation == 'PUBLISH VOC PUBLICLY'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - name: Checkout the workflow commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install pnpm
+        uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+        with:
+          version: 10.30.2
+          run_install: false
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - name: Verify explicit approval before contacting Pages
+        run: node scripts/publication-checks.mjs --approval
+        env:
+          APPROVED_COMMIT: ${{ inputs.approved_commit }}
+          PUBLICATION_CONFIRMATION: ${{ inputs.confirmation }}
+          VOC_PAGES_ENABLED: ${{ vars.VOC_PAGES_ENABLED }}
+      - name: Read existing Pages configuration (never enable it)
+        id: pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+        with:
+          enablement: false
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Verify, build and test exactly this release
+        env:
+          VOC_BASE_PATH: ${{ steps.pages.outputs.base_path }}/
+          PLAYWRIGHT_USE_EXISTING_BUILD: "1"
+        run: |
+          pnpm test:publishing
+          pnpm check:sources
+          pnpm audit --audit-level=high
+          pnpm typecheck
+          pnpm build
+          pnpm exec playwright install --with-deps chromium
+          pnpm test
+          pnpm check:dist
+      - name: Package only the tested static site
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: dist/
+          retention-days: 1
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish the approved artifact
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

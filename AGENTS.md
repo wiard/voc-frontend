@@ -24,6 +24,10 @@ This is the canonical project structure. Start with task-relevant files below. O
 - `.node-version` and `package.json` - Tested Node.js version and pinned pnpm version
 - `tests/homepage.spec.ts` - Browser regression checks using installed Google Chrome
 - `docs/PHASE1_REPORT.md` - Phase 1 scope, results and integration boundaries
+- `docs/PHASE2A_REPORT.md` - Publishing research, CI safeguards and activation boundaries
+- `.github/workflows/build.yml` - Build-only CI; no publication permissions
+- `.github/workflow-templates/pages-publish.yml.disabled` - Inactive publication template; never activate without explicit authorization
+- `scripts/publication-checks.mjs` and `tests/publishing.test.mjs` - Local publication and secret-pattern safeguards
 
 ## Dependencies
 

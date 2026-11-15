@@ -85,3 +85,24 @@ laat de externe lettertypen en afbeelding niet toe; los die compatibiliteit in
 een volgende, goedgekeurde fase op. Bouw buiten de VPS.
 
 Zie [het fase-1-rapport](docs/PHASE1_REPORT.md) voor bevindingen en testresultaten.
+
+## GitHub-bouwvoorbereiding (fase 2A)
+
+Op `codex/github-publishing` is een lokale buildworkflow toegevoegd. Deze
+publiceert niets: alleen `dist/` wordt later als privé build-artifact opgeslagen.
+De Pages-publicatie staat als **uitgeschakeld sjabloon** buiten de uitvoerbare
+workflowmap. Push, Pages-inrichting en publicatie vereisen aparte toestemming.
+
+```sh
+pnpm test:publishing
+pnpm check:sources
+pnpm build
+pnpm check:dist
+VOC_BASE_PATH=/voc-frontend/ pnpm test
+```
+
+`VOC_BASE_PATH` is standaard `/`; voor projecthosting is het `/voc-frontend/`.
+Op CI gebruikt Playwright de daar geïnstalleerde passende Chromium; lokaal
+blijft de bestaande Chrome in gebruik. Vite is wegens gemelde kwetsbaarheden
+gericht naar 8.1.7 bijgewerkt. Zie [het fase-2A-rapport](docs/PHASE2A_REPORT.md)
+voor kosten, veiligheidscontroles, domeinvoorwaarden en activeringsprocedure.
