@@ -48,10 +48,11 @@ test("prepared custom-domain workflow preserves the approved source and rejects 
   );
   assert.ok(guard);
   for (const [host, path, accepted] of [
-    ["nieuw.vocpartij.nl", "", true],
+    ["vocpartij.nl", "", true],
     ["wiard.github.io", "/voc-frontend", false],
     ["nieuw.vocpartij.nl", "/voc-frontend", false],
-    ["vocpartij.nl", "", false],
+    ["vocpartij.nl", "/voc-frontend", false],
+    ["nieuw.vocpartij.nl", "", false],
     ["www.vocpartij.nl", "", false],
     ["", "", false],
   ]) {

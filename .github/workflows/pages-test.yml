@@ -50,8 +50,10 @@ jobs:
         with:
           enablement: false
       - name: Verify custom domain and root path
+        # Certificate provisioning is checked separately; an HTTP Pages URL
+        # while GitHub issues the certificate must not block this static build.
         run: |
-          test "$PAGES_HOST" = "nieuw.vocpartij.nl"
+          test "$PAGES_HOST" = "vocpartij.nl"
           test -z "$PAGES_BASE"
         env:
           PAGES_HOST: ${{ steps.pages.outputs.host }}
